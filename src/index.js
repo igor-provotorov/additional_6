@@ -1,29 +1,20 @@
-module.exports = function zeros(expression) {
-  let delta = 1;
-  let res = 1;
-  let factorArr=expression.split('*');
-  factorArr.forEach((item)=> {
-    if (item.indexOf('!!') !== -1) {
-       delta = 2;
-    }
-    //var num = +item.slice(0, item.length - delta);
-    var num = +item.replace(/!/g,'');
-    for (var i = num; i > 1; i -= delta) {
-      res = multiply(res.toString(), i.toString());
-    }
-  })
-
-  let j = 0;
-
-  //console.log(res);
-  var k = res.split('').reverse();
-
-  while (k[j] === '0'){
-    j++;
+module.exports = function zeros(expression) { 
+  let res = 1; 
+  let factorArr=expression.split('*'); 
+  factorArr.forEach((item)=> { 
+  let delta = item.indexOf('!!')>=0? 2 : 1; 
+  var num = +item.replace(/!/g,''); 
+  for (var i = num; i > 1; i = i - delta) { 
+  res = multiply(res.toString(), i.toString()); 
+  } 
+  }) 
+  let j = 0; 
+  let k = res.split('').reverse(); 
+  while (k[j] === '0'){ 
+  j++; 
+  } 
+  return j; 
   }
-  return j;
-}
-
 
 
 function multiply(first, second) {
